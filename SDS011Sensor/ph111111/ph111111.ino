@@ -30,37 +30,37 @@
 // Serial.begin(9600);
 //}
 // 
-//void loop() {
-//   sensorValue = analogRead(A1);
-//   
-//   sensor_volt = sensorValue/1024*5.0;
-//   RS_gas = (5.0-sensor_volt)/sensor_volt;
-//   ratio = RS_gas/R0; //Replace R0 with the value found using the sketch above
-//   float x = 1538.46 * ratio;
-//   float ppm = pow(x,-1.709);
-//   Serial.print("PPM: ");
-//   Serial.println(ppm);
-//   delay(1000);
-//}
-
-#include "SDS011.h"
-
-float p10, p25;
-int error;
-SDS011 my_sds;
-
-void setup() {
-  my_sds.begin(2, 3);
-  Serial.begin(9600);
-      }
-
 void loop() {
-  Serial.println(millis());
-  error = my_sds.read(&p25, &p10);
-  if (!error) {
-    Serial.println("P2.5: " + String(p25));
-    Serial.println("P10:  " + String(p10));
-      
-  }
-  delay(1000);
-  }
+   sensorValue = analogRead(A1);
+   
+   sensor_volt = sensorValue/1024*5.0;
+   RS_gas = (5.0-sensor_volt)/sensor_volt;
+   ratio = RS_gas/R0; //Replace R0 with the value found using the sketch above
+   float x = 1538.46 * ratio;
+   float ppm = pow(x,-1.709);
+   Serial.print("PPM: ");
+   Serial.println(ppm);
+   delay(1000);
+}
+//
+//#include "SDS011.h"
+//
+//float p10, p25;
+//int error;
+//SDS011 my_sds;
+//
+//void setup() {
+//  my_sds.begin(2, 3);
+//  Serial.begin(9600);
+//      }
+//
+//void loop() {
+//  Serial.println(millis());
+//  error = my_sds.read(&p25, &p10);
+//  if (!error) {
+//    Serial.println("P2.5: " + String(p25));
+//    Serial.println("P10:  " + String(p10));
+//      
+//  }
+//  delay(1000);
+//  }
