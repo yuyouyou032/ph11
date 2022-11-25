@@ -6,6 +6,7 @@ import adafruit_bh1750
 from time import gmtime, strftime
 import time
 import serial
+
    
    
 #-------------------------------------------   
@@ -34,13 +35,23 @@ def query_bh1750():
 	print(bh1750_results)
 	return bh1750_results
 
-sds011_results = query_sds011()
-bmp180_results = query_bmp180()
-bh1750_results = query_bh1750()
+def query_mq7_mq135():
+    ser = serial.Serial("/dev/ttyUSB2", 9600, timeout=1)
+    value = str(ser.readline())[2:8]
+    print(value)
+    return value
+    
+    
+
+
 
 while True:
-    time.sleep(30)
     timestamp = strftime("%Y-%m-%d, %H:%M:%S", gmtime())
+    sds011_results = query_sds011()
+    bmp180_results = query_bmp180()
+    bh1750_results = query_bh1750()
+    mq7_mq135_results = query_mq7_mq135()
     f = open("stored_data.txt", 'a')
-    f.write(f"{timestamp},  {sds011_results['pm2.5']}, {sds011_results['pm10.0']}, {bmp180_results['temp']},{bmp180_results['pressure']}, {bmp180_results['altitude']}, {bh1750_results['lux']}\n")
+    f.write(f"{timestamp},  {sds011_results['pm2.5']}, {sds011_results['pm10.0']}, {bmp180_results['temp']},{bmp180_results['pressure']}, {bmp180_results['altitude']}, {bh1750_results['lux']}, {mq7_mq135_results}\n")
     f.close()
+    time.sleep(5)
