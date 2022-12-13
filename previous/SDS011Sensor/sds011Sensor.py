@@ -1,17 +1,18 @@
 import os
-from sds011 import SDS011
-import time
+import simple_sds011
 
-port = os.system("ls /dev/ttyUSB*")
-port = "/dev/ttyUSB" + str(port)
+    
 
-sds = SDS011(port=port)
-print(sds)
-
-sds.set_working_period(rate=5)
-
-meas = sds.read_measurement()
-
-print(meas)
-
+def query_sds011():
+    port = os.system("ls /dev/ttyUSB*")
+    port = "/dev/ttyUSB" + str(port)
+    print("port:", port)
+    pm = simple_sds011.SDS011(port)
+    pm.mode = simple_sds011.MODE_PASSIVE
+    print(pm.period)
+    
+    
+    sds011_results = pm.query()['value']
+    print(sds011_results)
+    
 
