@@ -3,7 +3,8 @@
         {
             "name": "Mac",
             "includePath": [
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/**",
+                "ph11/adafruit_files"
             ],
             "defines": [],
             "macFrameworkPath": [
