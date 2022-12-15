@@ -2,24 +2,28 @@
 #include <SPI.h>
 #include <Wire.h>
 #include <WiFi.h>
+#include <SDS011.h>
 #include "Adafruit_MQTT.h"
 #include "AdafruitIO_Feed.h"
 #include "Adafruit_MQTT_Client.h"
+
 
 #define WLAN_SSID       "yuyouyou"
 #define WLAN_PASS       "02031344"
 #define AIO_SERVER      "io.adafruit.com"
 #define AIO_SERVERPORT  1883
 #define AIO_USERNAME    "ph11"
-#define AIO_KEY         "aio_XmYl28uKnZSlPjkT0g0OCawXVnaS"
+#define AIO_KEY         "aio_gLKh908Pl73Il6u8Zd6lrTwA23Oq"
 
 #define MQ135  33
 #define MQ7    32
-
+SDS011 my_sds;
+#ifdef ESP32
+HardwareSerial port(2);
+#endif
 
 // setup WiFi credentials to enable I/O
 #include "AdafruitIO_WiFi.h"
-
 #if defined(USE_AIRLIFT) || defined(ADAFRUIT_METRO_M4_AIRLIFT_LITE) || defined(ADAFRUIT_PYPORTAL)
 // Configure the pins used for the ESP32 connection
 #if !defined(SPIWIFI_SS) // if the wifi definition isnt in the board variant
@@ -46,11 +50,15 @@ Adafruit_MQTT_Publish gases = Adafruit_MQTT_Publish(&mqtt, AIO_USERNAME "/feeds/
 // Input to live feed on Adafruit
 AdafruitIO_Feed *MQ135digital = io.feed("mq135");
 AdafruitIO_Feed *MQ7digital = io.feed("mq7");
+AdafruitIO_Feed *PM25digital = io.feed("pm2.5");
+AdafruitIO_Feed *PM10digital = io.feed("pm10");
 
 void setup() {
   Serial.begin(115200);
   pinMode(MQ135, INPUT);
   pinMode(MQ7, INPUT);
+  my_sds.begin(&port);
+  Serial.println("sensors initialised");
   
   // Connect to WiFi access point.
   Serial.println(); Serial.println();
@@ -123,18 +131,25 @@ void loop() {
 
   // all code (processing) after this point
   // dummy variables to aggregate
-  int a = 0, b = 0; 
+  int a = 0, b = 0, c=0, d=0;
+  float p10, p25;
+  int err;
   
   for (int i=0; i<1000; i++) {
     int MQ135reading = analogRead(MQ135);
     int MQ7reading = analogRead(MQ7);
+    err = my_sds.read(&p25, &p10);
     a = a + MQ135reading;
     b = b + MQ7reading;
+    c = c + p25;
+    d = d + p10;
   }
 
   // output the results
   int averageMQ135 = a/1000;
   int averageMQ7 = b/1000;
+  int averagePM25 = c/1000;
+  int averagePM10 = c/1000;
   Serial.print("MQ135 reading (hazardous gases): ");
   Serial.println(averageMQ135);
   MQ135digital->save(averageMQ135);
@@ -142,6 +157,16 @@ void loop() {
   Serial.print("MQ7 reading (CO): ");
   Serial.println(averageMQ7);
   MQ7digital->save(averageMQ7);
+
+  Serial.print("PM2.5 reading: ");
+  Serial.println(averagePM25);
+  PM25digital->save(averagePM25);
+
+
+  Serial.print("PM10 reading: ");
+  Serial.println(averagePM10);
+  PM10digital->save(averagePM10);
+
 
   delay(5000);
 }
