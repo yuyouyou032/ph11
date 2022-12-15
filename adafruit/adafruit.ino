@@ -6,12 +6,12 @@
 #include "AdafruitIO_Feed.h"
 #include "Adafruit_MQTT_Client.h"
 
-#define WLAN_SSID       "._."
-#define WLAN_PASS       "qwertyuiop1234567890/"
+#define WLAN_SSID       "yuyouyou"
+#define WLAN_PASS       "02031344"
 #define AIO_SERVER      "io.adafruit.com"
 #define AIO_SERVERPORT  1883
 #define AIO_USERNAME    "ph11"
-#define AIO_KEY         "aio_OFIF11KCcKksOmVHGG2otQykMez4"
+#define AIO_KEY         "aio_XmYl28uKnZSlPjkT0g0OCawXVnaS"
 
 #define MQ135  33
 #define MQ7    32
