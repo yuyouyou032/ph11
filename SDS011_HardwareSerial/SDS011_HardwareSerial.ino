@@ -18,14 +18,14 @@ HardwareSerial port(2);
 void setup() {
 	my_sds.begin(&port);
 	Serial.begin(115200);
-   Serial.println("started looping");
+  Serial.println("started looping");
 }
 
 void loop() {
 	err = my_sds.read(&p25, &p10);
-	if (!err) {
-		Serial.println("P2.5: " + String(p25));
-		Serial.println("P10:  " + String(p10));
-	}
-	delay(100);
+//	if (!err) {
+	Serial.println("P2.5: " + String(p25));
+	Serial.println("P10:  " + String(p10));
+//	} 
+	delay(1000);
 }
