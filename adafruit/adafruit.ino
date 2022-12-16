@@ -13,7 +13,7 @@
 #define AIO_SERVER      "io.adafruit.com"
 #define AIO_SERVERPORT  1883
 #define AIO_USERNAME    "ph11"
-#define AIO_KEY         "aio_MxRt10yVNJzlgpUVSIeAEhx5JUJT"
+#define AIO_KEY         "aio_LTyK211T4xYR7nq50Xz509HTI4r5"
 
 #define MQ135  35
 #define MQ7    34
@@ -139,7 +139,8 @@ void loop() {
 
   // all code (processing) after this point
   // dummy variables to aggregate
-  int a = 0, b = 0, c = 0, d = 0;
+  int a = 0, b = 0;
+  float c = 0, d = 0;
   int err = 0;
   float p10, p25;
   float RS_gas = 0;
