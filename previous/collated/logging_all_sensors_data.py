@@ -48,9 +48,9 @@ def query_mq7_mq135():
 while True:
     timestamp = strftime("%Y-%m-%d, %H:%M:%S", gmtime())
     sds011_results = query_sds011()
-    bmp180_results = query_bmp180()
-    bh1750_results = query_bh1750()
-    mq7_mq135_results = query_mq7_mq135()
+    #bmp180_results = query_bmp180()
+    #bh1750_results = query_bh1750()
+    #mq7_mq135_results = query_mq7_mq135()
     f = open("stored_data.txt", 'a')
     f.write(f"{timestamp},  {sds011_results['pm2.5']}, {sds011_results['pm10.0']}, {bmp180_results['temp']},{bmp180_results['pressure']}, {bmp180_results['altitude']}, {bh1750_results['lux']}, {mq7_mq135_results}\n")
     f.close()

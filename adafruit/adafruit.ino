@@ -8,12 +8,12 @@
 #include "Adafruit_MQTT_Client.h"
 
 
-#define WLAN_SSID       "._."
-#define WLAN_PASS       "qwertyuiop1234567890/"
+#define WLAN_SSID       "yuyouyou"
+#define WLAN_PASS       "02031344"
 #define AIO_SERVER      "io.adafruit.com"
 #define AIO_SERVERPORT  1883
 #define AIO_USERNAME    "ph11"
-#define AIO_KEY         "aio_LTyK211T4xYR7nq50Xz509HTI4r5"
+#define AIO_KEY         "aio_vtav9317avzNjDNUmj8VAITZFpJq"
 
 #define MQ135  35
 #define MQ7    34
@@ -49,10 +49,10 @@ Adafruit_MQTT_Publish gases = Adafruit_MQTT_Publish(&mqtt, AIO_USERNAME "/feeds/
 
 
 // Input to live feed on Adafruit
-AdafruitIO_Feed *MQ135digital = io.feed("mq-air-quality-1.mq135-1");
-AdafruitIO_Feed *MQ7digital = io.feed("mq-air-quality-1.mq7-1");
-AdafruitIO_Feed *PM25digital = io.feed("mq-air-quality-1.pm25-1"); // pm25 = pm2.5
-AdafruitIO_Feed *PM10digital = io.feed("mq-air-quality-1.pm10-1");
+AdafruitIO_Feed *MQ135digital = io.feed("b.mq135b");
+AdafruitIO_Feed *MQ7digital = io.feed("b.mq7b");
+AdafruitIO_Feed *PM25digital = io.feed("b.pm25b"); // pm25 = pm2.5
+AdafruitIO_Feed *PM10digital = io.feed("b.pm10b");
 
 //AdafruitIO_Feed *wifiOn = io.feed("wifiActive");
 //wifiOn->save(0);
@@ -205,6 +205,6 @@ void loop() {
   PM10digital->save(averagePM10);
 
 
-  delay(10000);
+  delay(25000);
 }
   
