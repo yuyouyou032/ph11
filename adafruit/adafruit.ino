@@ -13,7 +13,7 @@
 #define AIO_SERVER      "io.adafruit.com"
 #define AIO_SERVERPORT  1883
 #define AIO_USERNAME    "ph11"
-#define AIO_KEY         "aio_vtav9317avzNjDNUmj8VAITZFpJq"
+#define AIO_KEY         "aio_hURj14YWsCVoE8ek7jHsIjdg1ALV"
 
 #define MQ135  35
 #define MQ7    34
@@ -49,10 +49,10 @@ Adafruit_MQTT_Publish gases = Adafruit_MQTT_Publish(&mqtt, AIO_USERNAME "/feeds/
 
 
 // Input to live feed on Adafruit
-AdafruitIO_Feed *MQ135digital = io.feed("b.mq135b");
-AdafruitIO_Feed *MQ7digital = io.feed("b.mq7b");
-AdafruitIO_Feed *PM25digital = io.feed("b.pm25b"); // pm25 = pm2.5
-AdafruitIO_Feed *PM10digital = io.feed("b.pm10b");
+AdafruitIO_Feed *MQ135digital = io.feed("mq135");
+AdafruitIO_Feed *MQ7digital = io.feed("mq7");
+AdafruitIO_Feed *PM25digital = io.feed("pm25"); // pm25 = pm2.5
+AdafruitIO_Feed *PM10digital = io.feed("pm10");
 
 //AdafruitIO_Feed *wifiOn = io.feed("wifiActive");
 //wifiOn->save(0);
