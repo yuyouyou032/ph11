@@ -3,6 +3,7 @@
 #include <Wire.h>
 #include <WiFi.h>
 #include <SDS011.h>
+#include <Adafruit_BMP085.h>
 #include "Adafruit_MQTT.h"
 #include "AdafruitIO_Feed.h"
 #include "Adafruit_MQTT_Client.h"
@@ -13,12 +14,14 @@
 #define AIO_SERVER      "io.adafruit.com"
 #define AIO_SERVERPORT  1883
 #define AIO_USERNAME    "ph11"
-#define AIO_KEY         "aio_hURj14YWsCVoE8ek7jHsIjdg1ALV"
+#define AIO_KEY         "aio_ZUIU94LTWTm4DI0bdYn3mbQ5yk2w"
 
 #define MQ135  35
 #define MQ7    34
 
 SDS011 my_sds;
+Adafruit_BMP085 bmp;
+
 #ifdef ESP32
 HardwareSerial port(2);
 #endif
@@ -49,8 +52,8 @@ Adafruit_MQTT_Publish gases = Adafruit_MQTT_Publish(&mqtt, AIO_USERNAME "/feeds/
 
 
 // Input to live feed on Adafruit
-AdafruitIO_Feed *MQ135digital = io.feed("mq135");
-AdafruitIO_Feed *MQ7digital = io.feed("mq7");
+AdafruitIO_Feed *temperature = io.feed("mq7");
+AdafruitIO_Feed *pressure = io.feed("mq135");
 AdafruitIO_Feed *PM25digital = io.feed("pm25"); // pm25 = pm2.5
 AdafruitIO_Feed *PM10digital = io.feed("pm10");
 
@@ -58,6 +61,11 @@ AdafruitIO_Feed *PM10digital = io.feed("pm10");
 //wifiOn->save(0);
 
 void setup() {
+  if (!bmp.begin()) {
+  Serial.println("Could not find a valid BMP085/BMP180 sensor, check wiring!");
+  while (1) {}
+  }
+  
   my_sds.begin(&port);
   Serial.begin(115200);
   pinMode(MQ135, INPUT);
@@ -188,13 +196,15 @@ void loop() {
   float averagePM10 = d;
 
   // output the results
-  Serial.print("MQ135 reading (hazardous gases): ");
-  Serial.println(averageMQ135);
-  MQ135digital->save(averageMQ135);
-  
-  Serial.print("MQ7 reading (CO): ");
-  Serial.println(ppm);
-  MQ7digital->save(ppm);
+  Serial.print("Temperature = ");
+  Serial.print(bmp.readTemperature());
+  Serial.println(" *C");
+  temperature->save(bmp.readTemperature());
+
+  Serial.print("Pressure = ");
+  Serial.print(bmp.readPressure());
+  Serial.println(" Pa");
+  pressure->save(bmp.readPressure());
 
   Serial.print("PM2.5 reading: ");
   Serial.println(String(averagePM25));
@@ -203,6 +213,7 @@ void loop() {
   Serial.print("PM10 reading: ");
   Serial.println(String(p10));
   PM10digital->save(averagePM10);
+
 
 
   delay(25000);

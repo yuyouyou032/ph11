@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html>
+   <head>
+      <title>ESP32-S1</title>
+      <meta charset="utf-8"/>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" type="text/css" href="index.css">
+      <link rel="icon" type="image/png" href="favicon.ico">
+      <script src="index.js"></script>
+   </head>
+   <body>
+      <h2>ESP32 Air Quality Station</h2>
+      <p>
+         <span class="mq135-labels">CO</span> 
+         <span id="co"></span>
+         <sup class="units">&percnt;</sup>
+      </p>
+      <p> 
+         <span class="mq135-labels">CO2</span>
+         <span id="co2"></span>
+         <sup class="units">&percnt;</sup>
+      </p>
+      <p> 
+         <span class="mq135-labels">NH4</span>
+         <span id="nh4"></span>
+         <sup class="units">&percnt;</sup>
+      </p>
+      <p> 
+         <span class="mq135-labels">ALC</span>
+         <span id="alc"></span>
+         <sup class="units">&percnt;</sup>
+      </p>
+      <p> 
+         <span class="mq135-labels">TOL</span>
+         <span id="tol"></span>
+         <sup class="units">&percnt;</sup>
+      </p>
+      <p> 
+         <span class="mq135-labels">ACT</span>
+         <span id="act"></span>
+         <sup class="units">&percnt;</sup>
+      </p>
+   </body>
+   <script> CO(); </script>
+   <script> CO2(); </script>
+   <script> NH4(); </script>
+   <script> ALC(); </script>
+   <script> TOL(); </script>
+   <script> ACT(); </script>
+</html>
